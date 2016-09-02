@@ -28,11 +28,6 @@ B = [0;     0;      1/L];
 C = [1      0       0;
      0      1       0;
      0      0       1];    % Output all state variables for clarity.
-D = 0;
+D = [0;     0;      0];
 
 mtr_ss = ss(A,B,C,D);
-
-
-
-
-
