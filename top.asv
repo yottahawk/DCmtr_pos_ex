@@ -38,18 +38,32 @@ mtr_ss = ss(A,B,C,D);
 poles = eig(A); % Calculate the eigenvales (poles of the system)
 
 % We can plot the step response of the system to a unit step
+step_simtime = 0.2; % seconds
 
-[y_step, t_step]  = step(mtr_ss);
+[y_step, t_step]  = step(mtr_ss,[0:1e-6:step_simtime]);
 hold on;
 subplot(3,1,1)
 plot(t_step,y_step(:,1));
-ylabel('Position, \theta');
+ylabel('Position, $\theta$','interpreter','latex');
 xlabel('Time (s)');
 subplot(3,1,2)
 plot(t_step,y_step(:,2));
-
+ylabel('Velocity, $\dot{\theta}$','interpreter','latex');
 xlabel('Time (s)');
 subplot(3,1,3)
 plot(t_step,y_step(:,3));
+ylabel('Current, $i$','interpreter','latex');
 xlabel('Time (s)');
 hold off;
+%%
+% Feedforward control test
+
+% We want to control the velocity, so we insert a prescaling to the input.
+% The gain is equal to the reciprocal of the DC system gain from input to
+% position output. 
+
+pre_gain = 1 / dcgain(mtr_ss(2)); % (2) is the velocity state variable
+% We can now use the same step response plot, but multiply the SS model by
+% the pre-
+
+
